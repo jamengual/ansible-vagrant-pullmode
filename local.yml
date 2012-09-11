@@ -13,7 +13,7 @@
   tasks:
 
     - name: Install nginx 
-      action: apt pkg=nginx state=absent
+      action: apt pkg=nginx state=installed
 
 #    - name: Intall php 5.3 with Fpm support
 #      action: apt pkg=
