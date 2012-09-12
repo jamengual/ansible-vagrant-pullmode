@@ -13,18 +13,18 @@
   tasks:
     #- name: Install nginx 
   - action: apt name=$item state=installed
-	with_items:
-		- nginx
-		- php5-suhosin 
-		- php5-fpm
-		- php5-imagick
-		- php-pear
-		- php5-cli
-		- php5-common
-		- php5-mysql
-		- php5-gd
-		- php5-curl
-		- php5-xmlrpc
-		- php5-memcached
-		- php-apc
-		- mysql-server 
+    with_items:
+    - nginx
+    - php5-suhosin 
+    - php5-fpm
+    - php5-imagick
+    - php-pear
+    - php5-cli
+    - php5-common
+    - php5-mysql
+    - php5-gd
+    - php5-curl
+    - php5-xmlrpc
+    - php5-memcached
+    - php-apc
+    - mysql-server 
