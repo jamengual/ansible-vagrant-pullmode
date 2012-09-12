@@ -7,7 +7,7 @@
   user: vagrant 
   sudo: True
   
-vars:
+  vars:
 
 
   tasks:
