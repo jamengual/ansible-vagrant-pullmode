@@ -28,3 +28,4 @@
     - php5-memcached
     - php-apc
     - mysql-server 
+    - htop
