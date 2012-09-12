@@ -4,8 +4,8 @@
 ---
 
 - hosts: localhost 
-user: vagrant 
-sudo: True
+	user: vagrant 
+	sudo: True
   
 vars:
 
