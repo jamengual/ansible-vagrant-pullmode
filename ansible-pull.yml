@@ -15,8 +15,8 @@
 #
 ---
 
-- hosts: pull_mode_hosts
-  user: vagrnat 
+- hosts: localhost 
+  user: vagrant 
 
   vars:
 
