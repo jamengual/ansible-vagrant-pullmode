@@ -1,0 +1,45 @@
+---
+- hosts: all 
+  sudo: True
+  vars:
+    project_name = "Checkdesk"
+    vmbox = "MeedanDevVagrant.pkg"
+    #boxurl = "http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg"
+    boxurl = "http://127.0.0.1/~jamengual/MeedanDevVagrant.pkg"
+    local_dir = "~/Checkdesk"
+  vars_prompt:
+    - name: "shared_folder"
+      prompt: "Please enter the folder to share with vagrant"
+      private: False
+  tasks:
+     - action: command whereis vagrant 
+       register: is_vagrant_installed 
+
+     - name: "stop if vagrant is not installed"
+       action: command echo "Vagrant not installed!!!!"
+       only_if: "'${is_vagrant_installed.stdout}'.find('vagrant') != -1"
+
+     - name: Download Vagrant package
+       action: get_url $boxurl dest=/tmp/$vmbox 
+       
+     - name: Adding the box to vagrant
+       action: command vagrant add box $vmbox
+
+     - name: Creating Vagrant directory $project_name
+       action: file state=directory path=$local_dir
+
+     - name: Initializing Vagrant directory $project_name
+       action: command chdir=$local_dir vagrant init
+
+     - name: Exporting git ansible-vagrant git repo
+       action: git repo=git://github.com/jamengual/ansible-vagrant.git dest=$local_dir/ansible-vagrant
+
+     - name: Configuring template for Vagrant file
+       action: template src=$local_dir/ansible-vagrant/templates/Vagrantfile.j2 dest=$local_dir
+
+     - name: Starting Vagrant Vm
+       action: command vagrant up
+
+     - name: Running ansible pull from first time
+       action: command vagrant
+
