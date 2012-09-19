@@ -33,6 +33,7 @@
 
      #- name: Exporting git ansible-vagrant git repo
      #  action: git repo=git://github.com/jamengual/ansible-vagrant.git dest=$local_dir/ansible-vagrant
+	#
 
      - name: Configuring template for Vagrant file
        action: template src=$local_dir/ansible-vagrant/templates/Vagrantfile.j2 dest=$local_dir
