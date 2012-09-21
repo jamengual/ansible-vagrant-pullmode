@@ -20,6 +20,6 @@ Vagrant::Config.run do |config|
   
   # Enable share folder with the system
   config.vm.share_folder "v-data", "{{ shared_folder }}", "{{ shared_folder }}"
-  config.vm.share_folder "ansible", "{{ /ansible }}", "{{ local_folder }}"
+  config.vm.share_folder "ansible", "/ansible", "{{ local_folder }}"
 
 end
