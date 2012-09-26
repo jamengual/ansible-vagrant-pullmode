@@ -1,0 +1,41 @@
+#
+# Vagrant Andible Playbook for Devs
+#
+---
+
+- hosts: localhost 
+  user: vagrant 
+  sudo: True
+  
+  vars:
+    document_root: {{ shared_folder }}
+
+  tasks:
+    - name: Install nginx 
+      action: apt name=$item state=installed update-cache=yes
+      with_items:
+      - nginx
+      - php5-suhosin 
+      - php5-fpm
+      - php5-imagick
+      - php-pear
+      - php5-cli
+      - php5-common
+      - php5-mysql
+      - php5-gd
+      - php5-curl
+      - php5-xmlrpc
+      - php5-memcached
+      - php-apc
+      - mysql-server 
+      - htop
+      - memcached
+
+    - name: Installing nginx config file
+      action: template src=/ansible/ansible-vagrant/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+
+    - name: Installing {{project_name}} vhost file 
+      action: template src=/ansible/ansible-vagrant/templates/{{project_name}}.j2 dest=/etc/nginx/sites-available/{{project_name}}
+
+    - name: Enabling new vhost {{ project_name }} configuration
+      action: file state=link src=/etc/nginx/sites-available/{{project_name}} path=/etc/nginx/sites-available/checkdesk 
