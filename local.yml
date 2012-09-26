@@ -12,7 +12,7 @@
 
   tasks:
     #- name: Install nginx 
-  - action: apt name=$item state=installed
+  - action: apt name=$item state=installed update-cache=yes
     with_items:
     - nginx
     - php5-suhosin 
