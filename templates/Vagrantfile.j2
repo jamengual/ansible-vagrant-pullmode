@@ -4,7 +4,7 @@
 Vagrant::Config.run do |config|
   config.vm.box = "{{project_name}}"
   # config.vm.box_url = "http://domain.com/path/to/above.box"
-  #$config.vm.boot_mode = :gui
+  #config.vm.boot_mode = :gui
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
@@ -21,5 +21,8 @@ Vagrant::Config.run do |config|
   # Enable share folder with the system
   config.vm.share_folder "v-data", "{{ shared_folder }}", "{{ shared_folder }}"
   config.vm.share_folder "ansible", "/ansible", "{{ local_folder }}"
+  
+  # Enable Shell provisioner to run ansible playbooks on vagrant box
+  config.vm.provision :shell, :path => "runansible.sh"
 
 end

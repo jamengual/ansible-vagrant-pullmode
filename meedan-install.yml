@@ -1,46 +1,61 @@
 ---
 - hosts: all 
   sudo: True
+  sudo_user: jamengual
   vars:
     project_name: Checkdesk
     vmbox: MeedanDevVagrant.pkg
-    #boxurl = http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg
+    #boxurl: http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg
+    git_url: git://github.com/jamengual/ansible-vagrant.git
     boxurl: url=http://127.0.0.1/~jamengual/MeedanDevVagrant.pkg
-    local_dir: ~/Checkdesk
+    #local_dir: Checkdesk
+    local_dir: /Users/jamengual/PePehub/ansible-vagrant/Checkdesk
   vars_prompt:
     - name: "shared_folder"
-      prompt: "Please enter the folder to share with vagrant"
+      prompt: "Please enter the folder full path to share with vagrant (Where do you have your code)"
       private: False
   tasks:
      - action: command whereis vagrant 
        register: is_vagrant_installed 
 
      - name: "stop if vagrant is not installed"
-       action: command echo "Vagrant not installed!!!!"
+       action: command echo "Vagrant is not installed!!!!"
        only_if: "'${is_vagrant_installed.stdout}'.find('vagrant') != -1"
 
      - name: Downloading Vagrant package
        action: get_url $boxurl dest=/tmp/$vmbox 
        
-     - name: Adding the box to vagrant
-       action: command vagrant add box $vmbox
+     #- name: Adding the box to vagrant
+     #  action: command vagrant box add $project_name /tmp/$vmbox
 
      - name: Creating Vagrant directory $project_name
        action: file state=directory path=$local_dir
 
-     #- name: Initializing Vagrant directory $project_name
-     #  action: command chdir=$local_dir vagrant init
+     - name: Creating shared folder if doesn't exist
+       action: file state=directory path=$shared_folder
 
-     #- name: Exporting git ansible-vagrant git repo
-     #  action: git repo=git://github.com/jamengual/ansible-vagrant.git dest=$local_dir/ansible-vagrant
-	#
+     - name: Removing Vagrantfile if exist
+       action: file state=absent path=$local_dir/Vagrantfile
+
+     - name: Initializing Vagrant directory $project_name
+       action: command chdir=$local_dir vagrant init
+
+     - name: Exporting git ansible-vagrant git repo
+       #action: git repo=$git_url dest=$local_dir/ansible-vagrant version=dev
+       action: git repo=$git_url dest=/Users/jamengual/PePehub/ansible-vagrant/Checkdesk/ansible-vagrant version=dev
+       #action: command git clone -b dev $git_url $local_dir/ansible-vagrant
 
      - name: Configuring template for Vagrant file
-       action: template src=$local_dir/ansible-vagrant/templates/Vagrantfile.j2 dest=$local_dir
+       action: template src=$local_dir/ansible-vagrant/templates/Vagrantfile.j2 dest=$local_dir/Vagrantfile
 
      - name: Starting Vagrant Vm
-       action: command vagrant up
+       action: command chdir=$local_dir vagrant up
+
+     - name: Creating ansible checkout directory on VM
+       action: command chdir=$local_dir vagrant ssh -c "sudo mkdir -p /var/lib/ansible/local"
+
+     - name: Changin permisions to checkout directory
+       action: command chdir=$local_dir vagrant ssh -c "sudo chown -R vagrant /var/lib/ansible"
 
      - name: Running ansible pull from first time
-       action: command vagrant
-
+       action: command chdir=$local_dir vagrant ssh -c "ansible-playbook --connection=local /ansible/ansible-vagrant/ansible-pull.yml"
