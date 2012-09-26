@@ -53,6 +53,9 @@
      - name: Starting Vagrant Vm
        action: command chdir=$local_dir vagrant up
 
+     #- name: Adding checkdesk to your host table
+     #  action: lineinfile name=/etc/hosts regexp=^127.0.0.1 backup=yes
+
      - name: Creating ansible checkout directory on VM
        action: command chdir=$local_dir vagrant ssh -c "sudo mkdir -p /var/lib/ansible/local"
 
