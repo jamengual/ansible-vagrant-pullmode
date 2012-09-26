@@ -8,25 +8,48 @@
   sudo: True
   
   vars:
-
+    #document_root: {{ shared_folder }}
 
   tasks:
-    #- name: Install nginx 
-  - action: apt name=$item state=installed update-cache=yes
-    with_items:
-    - nginx
-    - php5-suhosin 
-    - php5-fpm
-    - php5-imagick
-    - php-pear
-    - php5-cli
-    - php5-common
-    - php5-mysql
-    - php5-gd
-    - php5-curl
-    - php5-xmlrpc
-    - php5-memcached
-    - php-apc
-    - mysql-server 
-    - htop
-    - memcached
+    - name: Install nginx 
+      action: apt name=$item state=installed update-cache=yes
+      with_items:
+      - nginx
+      - php5-suhosin 
+      - php5-fpm
+      - php5-imagick
+      - php-pear
+      - php5-cli
+      - php5-common
+      - php5-mysql
+      - php5-gd
+      - php5-curl
+      - php5-xmlrpc
+      - php5-memcached
+      - php-apc
+      - mysql-server 
+      - htop
+      - memcached
+
+    - name: Installing nginx config file
+      action: template src=/ansible/ansible-vagrant/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+
+    - name: Installing checkdesk vhost file 
+      action: copy src=/ansible/ansible-vagrant/checkdesk_vhost dest=/etc/nginx/sites-available/checkdesk
+
+    - name: Enabling new vhost checkdesk configuration
+      action: file state=link src=/etc/nginx/sites-available/checkdesk path=/etc/nginx/sites-available/checkdesk 
+
+    - name: Adding drush repository to pear libraries 
+      action: command pear channel-discover pear.drush.org
+
+    - name: Installing Drush
+      action: command pear install drush/drush 
+
+    - name: Restarting nginx
+      action: service name=nginx state=restarted
+
+    - name: Restarting php-fpm
+      action: service name=php-fpm state=restarted
+
+

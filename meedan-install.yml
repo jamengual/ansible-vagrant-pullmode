@@ -1,14 +1,13 @@
 ---
 - hosts: all 
   sudo: True
-  sudo_user: jamengual
   vars:
-    project_name: Checkdesk
+    project_name: checkdesk
     vmbox: MeedanDevVagrant.pkg
     #boxurl: http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg
     git_url: git://github.com/jamengual/ansible-vagrant.git
     boxurl: url=http://127.0.0.1/~jamengual/MeedanDevVagrant.pkg
-    #local_dir: Checkdesk
+    #local_dir: checkdesk
     local_dir: /Users/jamengual/PePehub/ansible-vagrant/Checkdesk
   vars_prompt:
     - name: "shared_folder"
@@ -25,8 +24,8 @@
      - name: Downloading Vagrant package
        action: get_url $boxurl dest=/tmp/$vmbox 
        
-     #- name: Adding the box to vagrant
-     #  action: command vagrant box add $project_name /tmp/$vmbox
+     - name: Adding the box to vagrant
+       action: command vagrant box add $project_name /tmp/$vmbox
 
      - name: Creating Vagrant directory $project_name
        action: file state=directory path=$local_dir
@@ -47,9 +46,15 @@
 
      - name: Configuring template for Vagrant file
        action: template src=$local_dir/ansible-vagrant/templates/Vagrantfile.j2 dest=$local_dir/Vagrantfile
+     
+     - name: Creating nginx virtual host config for VM
+       action: template src=templates/checkdesk.j2 dest=checkdesk_vhost owner=root group=root mode=644
 
      - name: Starting Vagrant Vm
        action: command chdir=$local_dir vagrant up
+
+     #- name: Adding checkdesk to your host table
+     #  action: lineinfile name=/etc/hosts regexp=^127.0.0.1 backup=yes
 
      - name: Creating ansible checkout directory on VM
        action: command chdir=$local_dir vagrant ssh -c "sudo mkdir -p /var/lib/ansible/local"

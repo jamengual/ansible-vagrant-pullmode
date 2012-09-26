@@ -23,6 +23,6 @@ Vagrant::Config.run do |config|
   config.vm.share_folder "ansible", "/ansible", "{{ local_folder }}"
   
   # Enable Shell provisioner to run ansible playbooks on vagrant box
-  config.vm.provision :shell, :path => "runansible.sh"
+  #config.vm.provision :shell, :path => "runansible.sh"
 
 end
