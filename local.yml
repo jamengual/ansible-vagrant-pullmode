@@ -38,7 +38,7 @@
       action: copy src=/ansible/ansible-vagrant/checkdesk_vhost dest=/etc/nginx/sites-available/checkdesk
 
     - name: Enabling new vhost checkdesk configuration
-      action: file state=link src=/etc/nginx/sites-available/checkdesk path=/etc/nginx/sites-enable/checkdesk 
+      action: file state=link src=/etc/nginx/sites-available/checkdesk path=/etc/nginx/sites-enabled/checkdesk 
 
     - name: Adding drush repository to pear libraries 
       action: command pear channel-discover pear.drush.org
