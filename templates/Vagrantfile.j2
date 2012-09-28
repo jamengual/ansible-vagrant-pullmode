@@ -19,7 +19,7 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 443, 4433 
   
   # Enable share folder with the system
-  config.vm.share_folder "v-data", "{{ shared_folder }}", "{{ shared_folder }}"
+  config.vm.share_folder "v-data", "${shared_folder.stdout}", "${shared_folder.stdout}"
   config.vm.share_folder "ansible", "/ansible", "{{ local_dir }}"
   
   # Enable Shell provisioner to run ansible playbooks on vagrant box
