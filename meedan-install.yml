@@ -8,7 +8,7 @@
     vmbox: MeedanDevVagrant.pkg
     #boxurl: http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg
     git_url: git://github.com/jamengual/ansible-vagrant.git
-    boxurl: url=http://127.0.0.1/~jamengual/MeedanDevVagrant.pkg
+    boxurl: url=http://192.168.1.33/~jamengual/MeedanDevVagrant.pkg
     #local_dir: checkdesk
     local_dir: ~/Checkdesk
   #vars_prompt:
