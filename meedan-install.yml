@@ -1,7 +1,8 @@
 ---
 - hosts: all 
-  sudo: True
-  sudo_user: jamengual
+  gather_facts: False
+  #sudo: True
+  #sudo_user: jamengual
   vars:
     project_name: CheckDesk
     vmbox: MeedanDevVagrant.pkg
@@ -9,7 +10,7 @@
     git_url: git://github.com/jamengual/ansible-vagrant.git
     boxurl: url=http://127.0.0.1/~jamengual/MeedanDevVagrant.pkg
     #local_dir: checkdesk
-    local_dir: /Users/jamengual/PePehub/ansible-vagrant/Checkdesk
+    local_dir: ~/Checkdesk
   #vars_prompt:
   #  - name: "shared_folder"
   #   prompt: "Please enter the folder full path to share with vagrant (Where do you have your code)"
