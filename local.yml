@@ -31,6 +31,9 @@
       - htop
       - memcached
 
+    - name: Make sure to upgrade Virtualbox Additions
+      action: apt name=virtualbox-guest-additions state=latest update-cache=yes
+ 
     - name: Installing nginx config file
       action: template src=/ansible/ansible-vagrant/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
 
