@@ -1,5 +1,11 @@
 #env bash
 
+## Url local
+curl http://127.0.0.1/~jamengual/meedan_dev_install.sh| bash
+
+## Remote url
+curl http://files.amengual.cl/meedan_dev_install.sh| bash
+
 withsudo="sudo"
 
 #Color definition
@@ -49,11 +55,13 @@ else
   if [[ -n $isgit ]]; then
     ## Cloning ansible-vagran meedan repo
     echo "Cloning devutils repo"
+    rm -rf ~/ansible-vagrant
     git clone -b dev https://github.com/jamengual/ansible-vagrant.git ~/ansible-vagrant 
     ## installing ansible
     echo "localhost" > ~/ansible_hosts
     export ANSIBLE_HOSTS=~/ansible_hosts
-    git clone git://github.com/ansible/ansible.git ~/anible 
+    rm -rf ~/ansible
+    git clone git://github.com/ansible/ansible.git ~/ansible 
     source ~/ansible/hacking/env-setup
     echo "Running ansible and meedan playbook"
     cd ~/ansible-vagrant/ && ansible-playbook --connection=local meedan-install.yml
