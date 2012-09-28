@@ -1,7 +1,7 @@
 server {
 	listen       80;
 	access_log  /var/log/nginx/checkdesk.access.log  main;
-        error_log   /var/log/nginx/checkdesk.error.log index;
+        error_log   /var/log/nginx/checkdesk.error.log info;
         server_name localhost checkdesk {{ vagrant_host }};
 	client_max_body_size    50m;
 	root {{shared_folder}};
@@ -26,10 +26,10 @@ server {
         location ~ \..*/.*\.php$ {
                return 403;
         }
-	location = /install.php {
-		allow localhost/32;
-		deny   all;
-        }
+	#location = /install.php {
+	#	allow localhost;
+	#	deny   all;
+        #}
 
         location / {
                 # This is cool because no php is touched for static content
@@ -43,7 +43,7 @@ server {
         location ~ \.php$ {
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
                 #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-                include /usr/local/etc/nginx/fastcgi_params;
+                include /etc/nginx/fastcgi_params;
                 fastcgi_index index.php;
                 fastcgi_param SCRIPT_FILENAME   $document_root$fastcgi_script_name; 
                 fastcgi_param  REQUEST_URI      $request_uri;
