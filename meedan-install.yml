@@ -26,8 +26,8 @@
        action: command python directoryselection.py
        register: shared_folder
 
-     - name: Downloading Vagrant package
-       action: get_url $boxurl dest=/tmp/$vmbox 
+     #- name: Downloading Vagrant package
+     #  action: get_url $boxurl dest=/tmp/$vmbox 
        
      - name: Adding the box to vagrant
        action: command vagrant box add $project_name /tmp/$vmbox
@@ -46,7 +46,7 @@
 
      - name: Exporting git ansible-vagrant git repo
        #action: git repo=$git_url dest=$local_dir/ansible-vagrant version=dev
-       action: git repo=$git_url dest=/Users/jamengual/PePehub/ansible-vagrant/Checkdesk/ansible-vagrant version=dev
+       action: git repo=$git_url dest=$local_dir/ansible-vagrant version=dev
        #action: command git clone -b dev $git_url $local_dir/ansible-vagrant
 
      - name: Configuring template for Vagrant file
