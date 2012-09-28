@@ -53,6 +53,6 @@
       action: service name=nginx state=restarted
 
     - name: Restarting php-fpm
-      action: service name=php-fpm state=restarted
+      action: service name=php5-fpm state=restarted
 
 
