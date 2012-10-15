@@ -1,10 +1,11 @@
 #env bash
+trap 'exit 1' 0 1 2 5 15
 
 ## Url local
-curl http://127.0.0.1/~jamengual/meedan_dev_install.sh| bash
+#curl http://127.0.0.1/~jamengual/meedan_dev_install.sh| bash
 
-## Remote url
-curl http://files.amengual.cl/meedan_dev_install.sh| bash
+## Remote url #pass meedandsfadsfasdf8413412342
+#curl -umeedan http://files.amengual.cl/meedan_dev_install.sh| bash
 
 withsudo="sudo"
 
@@ -49,6 +50,10 @@ else
   $withsudo $command jinja2
   echo "Installing paramiko..."
   $withsudo $command paramiko
+  echo "Installing TKinter"
+  $withsudo $command GTKUtils 
+  #echo "Installing EasyGui"
+  #$withsudo $command easygui
 
   ## Checking if git is installed
   isgit=`which git`
@@ -65,9 +70,10 @@ else
     source ~/ansible/hacking/env-setup
     echo "Running ansible and meedan playbook"
     cd ~/ansible-vagrant/ && ansible-playbook --connection=local meedan-install.yml
+    echo "Removing Ansible installation"
+    rm -rf ~/ansible
   else
     echo "Git is not installed, please install git"
     exit 1
   fi
 fi
-

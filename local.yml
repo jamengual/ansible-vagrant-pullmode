@@ -6,7 +6,7 @@
 - hosts: localhost 
   user: vagrant 
   sudo: True
-  
+  gather_facts: False
   vars:
     #document_root: {{ shared_folder }}
 
@@ -14,6 +14,7 @@
     - name: Install nginx 
       action: apt name=$item state=installed update-cache=yes
       with_items:
+      - mysql-server
       - nginx
       - php5-suhosin 
       - php5-fpm
@@ -27,14 +28,14 @@
       - php5-xmlrpc
       - php5-memcached
       - php-apc
-      - mysql-server 
       - htop
       - memcached
+      - python-mysqldb
 
     - name: Make sure to upgrade Virtualbox Additions
       action: apt name=virtualbox-guest-additions state=latest update-cache=yes
  
-    - name: Installing nginx config file
+    - name: Installing nginx config files
       action: template src=/ansible/ansible-vagrant/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
 
     - name: Installing checkdesk vhost file 
@@ -55,4 +56,8 @@
     - name: Restarting php-fpm
       action: service name=php5-fpm state=restarted
 
+    - name: Creating db for $project_name
+      action: mysql_db db=checkdesk state=present
 
+    - name: Importing db selected dump
+      action: mysql_db state=import  target=$sqldumpfile
