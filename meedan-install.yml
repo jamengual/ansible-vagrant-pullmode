@@ -26,9 +26,9 @@
        action: command python directoryselection.py
        register: shared_folder
 
-     - name: Selecting SQL dump for drupal
-       action: command python directoryselection.py
-       register: sqldumpfile
+    # - name: Selecting SQL dump for drupal
+    #   action: command python directoryselection.py
+    #   register: sqldumpfile
 
      #- name: Downloading Vagrant package
      #  action: get_url $boxurl dest=/tmp/$vmbox 
@@ -74,11 +74,3 @@
 
      - name: Running ansible pull from first time
        action: command chdir=$local_dir vagrant ssh -c "ansible-playbook --connection=local /ansible/ansible-vagrant/ansible-pull.yml"
-
-     - name: Creating db for $project_name
-      action: mysql_db db=checkdesk login_host=localhost:3366 state=present
-
-    - name: Importing db selected dump
-      action: mysql_db state=import login_host=localhost:3366 target=$sqldumpfile
-
-     
