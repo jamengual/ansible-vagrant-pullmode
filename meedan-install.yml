@@ -1,15 +1,16 @@
 ---
 - hosts: all 
-  sudo: True
-  sudo_user: jamengual
+  gather_facts: False
+  #sudo: True
+  #sudo_user: jamengual
   vars:
     project_name: CheckDesk
     vmbox: MeedanDevVagrant.pkg
     #boxurl: http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg
     git_url: git://github.com/jamengual/ansible-vagrant.git
-    boxurl: url=http://127.0.0.1/~jamengual/MeedanDevVagrant.pkg
+    boxurl: url=http://localhost/~jamengual/MeedanDevVagrant.pkg
     #local_dir: checkdesk
-    local_dir: /Users/jamengual/PePehub/ansible-vagrant/Checkdesk
+    local_dir: ~/Checkdesk
   #vars_prompt:
   #  - name: "shared_folder"
   #   prompt: "Please enter the folder full path to share with vagrant (Where do you have your code)"
@@ -25,8 +26,12 @@
        action: command python directoryselection.py
        register: shared_folder
 
-     - name: Downloading Vagrant package
-       action: get_url $boxurl dest=/tmp/$vmbox 
+     - name: Selecting SQL dump for drupal
+       action: command python directoryselection.py
+       register: sqldumpfile
+
+     #- name: Downloading Vagrant package
+     #  action: get_url $boxurl dest=/tmp/$vmbox 
        
      - name: Adding the box to vagrant
        action: command vagrant box add $project_name /tmp/$vmbox
@@ -45,7 +50,7 @@
 
      - name: Exporting git ansible-vagrant git repo
        #action: git repo=$git_url dest=$local_dir/ansible-vagrant version=dev
-       action: git repo=$git_url dest=/Users/jamengual/PePehub/ansible-vagrant/Checkdesk/ansible-vagrant version=dev
+       action: git repo=$git_url dest=$local_dir/ansible-vagrant version=dev
        #action: command git clone -b dev $git_url $local_dir/ansible-vagrant
 
      - name: Configuring template for Vagrant file
@@ -69,3 +74,11 @@
 
      - name: Running ansible pull from first time
        action: command chdir=$local_dir vagrant ssh -c "ansible-playbook --connection=local /ansible/ansible-vagrant/ansible-pull.yml"
+
+     - name: Creating db for $project_name
+      action: mysql_db db=checkdesk login_host=localhost:3366 state=present
+
+    - name: Importing db selected dump
+      action: mysql_db state=import login_host=localhost:3366 target=$sqldumpfile
+
+     

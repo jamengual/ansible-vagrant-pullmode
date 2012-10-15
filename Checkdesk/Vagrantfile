@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
-  config.vm.box = "{{project_name}}"
+  config.vm.box = "CheckDesk"
   # config.vm.box_url = "http://domain.com/path/to/above.box"
   #config.vm.boot_mode = :gui
 
@@ -16,12 +16,11 @@ Vagrant::Config.run do |config|
   # computers to access the VM, whereas host only networking does not.
   config.vm.forward_port 80, 8888
   config.vm.forward_port 22, 2222 
-  config.vm.forward_port 4433, 4433 
-  config.vm.forward_port 3366, 3306 
+  config.vm.forward_port 443, 4433 
   
   # Enable share folder with the system
-  config.vm.share_folder "v-data", "${shared_folder.stdout}", "${shared_folder.stdout}"
-  config.vm.share_folder "ansible", "/ansible", "{{ local_dir }}"
+  config.vm.share_folder "v-data", "/Users/jamengual/Sites", "/Users/jamengual/Sites"
+  config.vm.share_folder "ansible", "/ansible", "/Users/jamengual/PePehub/ansible-vagrant/Checkdesk"
   
   # Enable Shell provisioner to run ansible playbooks on vagrant box
   #config.vm.provision :shell, :path => "runansible.sh"
