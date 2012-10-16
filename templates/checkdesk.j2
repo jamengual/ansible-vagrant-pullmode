@@ -4,7 +4,7 @@ server {
         error_log   /var/log/nginx/checkdesk.error.log info;
         server_name localhost checkdesk {{ vagrant_host }};
 	client_max_body_size    50m;
-	root {{shared_folder}};
+	root ${shared_folder.stdout};
 	#error_page 404 = @rewrite;
         index index.php; 
 	location = /favicon.ico {
