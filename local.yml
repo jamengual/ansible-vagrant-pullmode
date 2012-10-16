@@ -67,7 +67,7 @@
       action: mysql_db db=checkdesk state=present
 
     - name: Changing default pass for user root for mysql
-      action: mysql_user login_user=root name=root password=root
+      action: mysql_user name=root password=root
 
     #- name: Importing db selected dumpfile
     # action: mysql_db state=import  target=./dumpfile.sql
