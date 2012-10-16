@@ -69,9 +69,11 @@
     #- name: Importing db selected dumpfile
     # action: mysql_db state=import  target=./dumpfile.sql
     #
-    # pear install drush/drush
     - name: Adding drush repository to pear libraries 
       action: shell pear channel-discover pear.drush.org
 
     - name: Installing Drush
       action: shell pear install drush/drush
+
+    - name: Changing default mysql password
+      action: command mysqladmin password root
