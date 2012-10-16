@@ -52,7 +52,7 @@
       action: file state=link src=/etc/nginx/sites-available/phpmyadmin path=/etc/nginx/sites-enabled/phpmyadmin
 
     - name: Adding drush repository to pear libraries 
-      action: command pear channel-discover pear.drush.org
+      action: shell pear channel-discover pear.drush.org
 
     - name: Installing Drush
       action: command pear install drush/drush 
