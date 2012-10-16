@@ -51,9 +51,6 @@
     - name: Enabling new phpadmin config for nginx
       action: file state=link src=/etc/nginx/sites-available/phpmyadmin path=/etc/nginx/sites-enabled/phpmyadmin
 
-    - name: Installing Drush
-      action: command pear install drush/drush 
-
     - name: Restarting nginx
       action: service name=nginx state=restarted
 
