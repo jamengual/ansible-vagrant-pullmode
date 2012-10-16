@@ -34,6 +34,9 @@
     repo_url: git://github.com/jamengual/ansible-vagrant.git
     #repo_url: SUPPLY_YOUR_OWN_GIT_URL_HERE
 
+    # Checkout branch
+    checkout: dev
+
   tasks:
 
     - name: Install ansible
