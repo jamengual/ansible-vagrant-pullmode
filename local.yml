@@ -51,9 +51,6 @@
     - name: Enabling new phpadmin config for nginx
       action: file state=link src=/etc/nginx/sites-available/phpmyadmin path=/etc/nginx/sites-enabled/phpmyadmin
 
-    - name: Adding drush repository to pear libraries 
-      action: shell pear channel-discover pear.drush.org
-
     - name: Installing Drush
       action: command pear install drush/drush 
 
@@ -71,3 +68,10 @@
 
     #- name: Importing db selected dumpfile
     # action: mysql_db state=import  target=./dumpfile.sql
+    #
+    # pear install drush/drush
+    - name: Adding drush repository to pear libraries 
+      action: shell pear channel-discover pear.drush.org
+
+    - name: Installing Drush
+      action: shell pear install drush/drush
