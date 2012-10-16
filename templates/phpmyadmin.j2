@@ -1,0 +1,37 @@
+server {
+        listen       80;
+        server_name phpmyadmin.checkdesk;
+        client_max_body_size    100m;
+        access_log  /var/log/nginx/phpmyadmin.access.log  main;
+        error_log   /var/log/nginx/phpmyadmin.error.log info;
+        root  /usr/share/phpmyadmin;
+        location / {
+                #allow 11.11.11.11/32;
+                #deny   all;
+                index index.php index.html index.htm;
+                location ~ /\. {
+                    deny  all;
+                }
+                if (-f $request_filename) {
+                    expires max;
+                    break;
+                }
+        }
+        location /phpmyadmin {
+                index index.php index.html index.htm;
+                alias  /usr/share/phpmyadmin;
+        }
+        location ~ \.php$ {
+                include /etc/nginx/fastcgi_params;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+                fastcgi_param  REQUEST_URI      $request_uri;
+                fastcgi_param  QUERY_STRING     $query_string;
+                fastcgi_param  REQUEST_METHOD   $request_method;
+                fastcgi_param  CONTENT_TYPE     $content_type;
+                fastcgi_param  CONTENT_LENGTH   $content_length;
+                fastcgi_pass   localhost:9000;
+        }
+    }
+
+
