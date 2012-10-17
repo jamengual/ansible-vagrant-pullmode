@@ -3,14 +3,14 @@
 #
 ---
 - name: Installing minimal requeriments
- hosts: localhost
- user: vagrant
- sudo: True
- gather_facts: False
- vars:
- #document_root: {{ shared_folder }}
+  hosts: localhost
+  user: vagrant
+  sudo: True
+  gather_facts: False
+  vars:
+  #document_root: {{ shared_folder }}
 
- tasks:
+  tasks:
   - name: Install nginx
     action: apt name=$item state=installed update-cache=yes
     with_items:
@@ -33,47 +33,47 @@
     - python-mysqldb
     - phpmyadmin
 
- - name: Make sure to upgrade Virtualbox Additions
-   action: apt name=virtualbox-guest-additions state=latest update-cache=yes
+  - name: Make sure to upgrade Virtualbox Additions
+    action: apt name=virtualbox-guest-additions state=latest update-cache=yes
  
- - name: Installing nginx config files
-   action: template src=/ansible/ansible-vagrant/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  - name: Installing nginx config files
+    action: template src=/ansible/ansible-vagrant/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
 
- - name: Installing checkdesk vhost file 
-   action: copy src=/ansible/ansible-vagrant/checkdesk_vhost dest=/etc/nginx/sites-available/checkdesk
+  - name: Installing checkdesk vhost file 
+    action: copy src=/ansible/ansible-vagrant/checkdesk_vhost dest=/etc/nginx/sites-available/checkdesk
 
- - name: Installing phpmyadmin nginx config
-   action: copy src=/ansible/ansible-vagrant/templates/phpmyadmin.j2 dest=/etc/nginx/sites-available/phpmyadmin
+  - name: Installing phpmyadmin nginx config
+    action: copy src=/ansible/ansible-vagrant/templates/phpmyadmin.j2 dest=/etc/nginx/sites-available/phpmyadmin
 
- - name: Enabling new vhost checkdesk configuration
-   action: file state=link src=/etc/nginx/sites-available/checkdesk path=/etc/nginx/sites-enabled/checkdesk
+  - name: Enabling new vhost checkdesk configuration
+    action: file state=link src=/etc/nginx/sites-available/checkdesk path=/etc/nginx/sites-enabled/checkdesk
 
- - name: Enabling new phpadmin config for nginx
-   action: file state=link src=/etc/nginx/sites-available/phpmyadmin path=/etc/nginx/sites-enabled/phpmyadmin
+  - name: Enabling new phpadmin config for nginx
+    action: file state=link src=/etc/nginx/sites-available/phpmyadmin path=/etc/nginx/sites-enabled/phpmyadmin
 
- - name: Restarting nginx
-   action: service name=nginx state=restarted
+  - name: Restarting nginx
+    action: service name=nginx state=restarted
 
- - name: Restarting php-fpm
-   action: service name=php5-fpm state=restarted
+  - name: Restarting php-fpm
+    action: service name=php5-fpm state=restarted
 
- - name: Creating db for $project_name
-   action: mysql_db login_user=root db=checkdesk state=present
+  - name: Creating db for $project_name
+    action: mysql_db login_user=root db=checkdesk state=present
 
- - name: Changing default mysql password
-   action: command mysqladmin password root
+  - name: Changing default mysql password
+    action: command mysqladmin password root
 
  #- name: Importing db selected dumpfile
  # action: mysql_db state=import  target=./dumpfile.sql
  #
 - name: Installing Drush
- hosts: localhost 
- user: vagrant 
- sudo: True
- gather_facts: False
- ignore_errors: True
+  hosts: localhost 
+  user: vagrant 
+  sudo: True
+  gather_facts: False
+  ignore_errors: True
    
- tasks:
+  tasks:
   - name: Adding drush repository to pear libraries 
     action: shell pear channel-discover pear.drush.org
 
