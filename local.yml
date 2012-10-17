@@ -45,6 +45,9 @@
   - name: Installing phpmyadmin nginx config
     action: copy src=/ansible/ansible-vagrant/templates/phpmyadmin.j2 dest=/etc/nginx/sites-available/phpmyadmin
 
+  - name: Installing php.ini custom file
+    action: copy src=/ansible/ansible-vagrant/templates/php.ini.j2 dest=/etc/php5/fpm/php.ini
+
   - name: Enabling new vhost checkdesk configuration
     action: file state=link src=/etc/nginx/sites-available/checkdesk path=/etc/nginx/sites-enabled/checkdesk
 
