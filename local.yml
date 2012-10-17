@@ -71,11 +71,13 @@
   user: vagrant 
   sudo: True
   gather_facts: False
-  ignore_errors: True
    
   tasks:
   - name: Adding drush repository to pear libraries 
     action: shell pear channel-discover pear.drush.org
+    ignore_errors: True
 
   - name: Installing Drush
     action: shell pear install drush/drush
+    ignore_errors: True
+    
