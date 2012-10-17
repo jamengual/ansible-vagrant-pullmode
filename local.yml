@@ -57,11 +57,11 @@
   - name: Restarting php-fpm
     action: service name=php5-fpm state=restarted
 
-  - name: Creating db for $project_name
-    action: mysql_db login_user=root db=checkdesk state=present
-
   - name: Changing default mysql password
     action: command mysqladmin password root
+
+  - name: Creating db for $project_name
+    action: mysql_db login_user=root login_password=root db=checkdesk state=present
 
  #- name: Importing db selected dumpfile
  # action: mysql_db state=import  target=./dumpfile.sql
