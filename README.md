@@ -52,5 +52,5 @@ http://checkdesk:8888
 
   That will shutdown the virtual machine gracefully after 10 second aprox.
 
-  If you want to add more memory or CPU to the virtual machine then you can take a look at the vagrantup.com documentation on how to do that.
+  If you want to add more memory or CPU to the virtual machine then you can take a look at the vagrantup.com documentation on how to change those settings and cutomize your config file.
 
