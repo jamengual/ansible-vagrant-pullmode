@@ -15,11 +15,13 @@ Requeriments :
 
 2.- Vagrant latets version http://downloads.vagrantup.com
 
-3.- Python 2.x, pip or setuptools required.```
+3.- Python 2.x, pip or setuptools required.
+```
 
 To run the script simply call from your terminal :
 ```
-curl -uusername http://files.amengual.cl/ansible-vagrant/meedan_dev_install.sh |bash -c```
+curl -uusername http://files.amengual.cl/ansible-vagrant/meedan_dev_install.sh |bash -c
+```
 
 Note : Use the credentials provided.
 
