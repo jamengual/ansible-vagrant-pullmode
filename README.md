@@ -19,6 +19,6 @@ Requeriments :
 
 To run the script simply call from your terminal :
 
-curl http://files.amengual.cl/meedan_dev_install.sh |bash -c
+curl http://files.amengual.cl/ansible-vagrant/meedan_dev_install.sh |bash -c
 
 Blablabla....
