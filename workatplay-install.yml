@@ -4,13 +4,12 @@
   #sudo: True
   #sudo_user: jamengual
   vars:
-    project_name: CheckDesk
-    vmbox: MeedanDevVagrant.pkg
+    project_name: RCTY
+    vmbox: workatplay.pkg
     #boxurl: http://files.amengual.cl/MeedanDevVagrant.pkg dest=/tmp/MeedanDevVagrant.pkg
     git_url: git://github.com/jamengual/ansible-vagrant.git
-    boxurl: url=http://192.168.1.33/~jamengual/MeedanDevVagrant.pkg
-    #local_dir: checkdesk
-    local_dir: ~/Checkdesk
+    boxurl: url=http://172.16.39.124/~jamengual/workatplay.pkg
+    local_dir: ~/RCTY
   #vars_prompt:
   #  - name: "shared_folder"
   #   prompt: "Please enter the folder full path to share with vagrant (Where do you have your code)"
@@ -51,7 +50,7 @@
        action: template src=$local_dir/ansible-vagrant/templates/Vagrantfile.j2 dest=$local_dir/Vagrantfile
      
      - name: Creating nginx virtual host config for VM
-       action: template src=$local_dir/ansible-vagrant/templates/checkdesk.j2 dest=$local_dir/ansible-vagrant/checkdesk_vhost
+       action: template src=$local_dir/ansible-vagrant/templates/rcty.j2 dest=$local_dir/ansible-vagrant/rcty_vhost
 
      #- name: Adding checkdesk to your host table
       #action: lineinfile name=/etc/hosts regexp=^127.0.0.1 backup=yes
