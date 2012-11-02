@@ -1,6 +1,7 @@
-import easygui as eg
-import sys
+import Tkinter, tkFileDialog
 
-dirselected = eg.diropenbox( "Select the directory", "Select your code folder")
-print dirselected 
-
+root = Tkinter.Tk()
+root.withdraw()
+dirname = tkFileDialog.askdirectory(parent=root,initialdir="/",title='Please select a directory')
+if len(dirname ) > 0:
+    print dirname
