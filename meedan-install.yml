@@ -27,7 +27,7 @@
        register: shared_folder
 
      - name: Downloading Vagrant package
-       action: get_url $boxurl dest=/tmp/$vmbox 
+       action: get_url url=$boxurl dest=/tmp/$vmbox 
        
      - name: Adding the box to vagrant
        action: command vagrant box add $project_name /tmp/$vmbox
