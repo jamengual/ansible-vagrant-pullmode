@@ -68,3 +68,6 @@
 
      - name: Running ansible pull from first time
        action: command chdir=$local_dir vagrant ssh -c "ansible-playbook --connection=local /ansible/ansible-vagrant/ansible-pull.yml"
+
+     - name: Waiting for services to start
+       action: wait_for host=localhost timeout=3600 port=3366 delay=10 state=started

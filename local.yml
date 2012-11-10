@@ -14,7 +14,6 @@
   - name: Install nginx
     action: apt name=$item state=installed update-cache=yes
     with_items:
-    - mysql-server
     - nginx
     - php5-suhosin
     - php5-fpm
@@ -32,6 +31,9 @@
     - memcached
     - python-mysqldb
     - phpmyadmin
+    - inetutils-traceroute
+    - redis-server
+    - mysql-server
 
   - name: Make sure to upgrade Virtualbox Additions
     action: apt name=virtualbox-guest-additions state=latest update-cache=yes
