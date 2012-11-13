@@ -52,8 +52,10 @@
 
 <p>To run the script simply call from your terminal :</p>
 
-<pre><code>curl http://files.amengual.cl/ansible-vagrant/meedan_dev_install.sh |bash
+<pre><code>curl -uusername http://files.amengual.cl/ansible-vagrant/meedan_dev_install.sh |bash
 </code></pre>
+
+<p>Note : Use the credentials provided (Ask PePe).</p>
 
 <p>The process takes about 10 minutes depending on your internet connection speed and computer speed, after this you will have to add the following entries on your host table (/etc/hosts):</p>
 
@@ -64,7 +66,7 @@
 
 <p>After that you will be able to access phpmyadmin to import the db dump at :</p>
 
-<pre><code>http://phpmyadmin.checkdesk:8888
+<pre><code>http://phpmyadmin.checkdesk:8888 (user:root, pass:root )
 </code></pre>
 
 <p>and after uploading the db you can see the site at :</p>
