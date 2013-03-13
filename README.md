@@ -3,13 +3,15 @@ ansible-vagrant pull mode integration
 
 Ansible playbooks for vagrant in pull mode
 
+This project was created to help Meedan in the developing process of one of their drupal projects. Although this is a more drupal oriented type of configuration it can be applied to many different frameworks and projects and I will be happy to receive feedback and feature request to make this project even better.
+
 This script/playbook for ansible allow developers to configure their own dev environment on they local machines using Vagrant and Ansible to match the configurations of the production environment or similar.
 
-Please note that this script was build using bash so if you are a windows user you will not be able to use this script and you will have to get a copy of the dev enviroment from someone else and install it on your windows copy of virtual box.
+Please note that this script was build using bash so if you are a windows user you will not be able to use this script and you will have to get a copy of the dev environment from someone else and install it on your windows copy of virtual box.
 
-Before using this script make sure you have all the minimum requeriments pre installed.
+Before using this script make sure you have all the minimum requirements pre installed.
 
-Requeriments :
+Requirements :
 ```
 1.- Virtualbox latest version https://www.virtualbox.org/wiki/Downloads
 
