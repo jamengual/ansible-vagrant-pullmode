@@ -7,6 +7,10 @@ This project was created to help Meedan in the developing process of one of thei
 
 This script/playbook for ansible allow developers to configure their own dev environment on they local machines using Vagrant and Ansible to match the configurations of the production environment or similar.
 
+One of the thing that we needed was to be able to use pull mode in ansible from the virtual environments so that we can create per developer/project git repos for the dev VMs so that we can push changes to the repos and when the team/user comes online it will automatically pull the new playbook and run the ansible-cron to go through the changes at any time in any timezone without user/syadmin intervention.
+
+This project was especially designed for groups working in different time zones, working from home and in different time zones.
+
 Please note that this script was build using bash so if you are a windows user you will not be able to use this script and you will have to get a copy of the dev environment from someone else and install it on your windows copy of virtual box.
 
 Before using this script make sure you have all the minimum requirements pre installed.
