@@ -1,0 +1,66 @@
+server {
+	listen       80;
+	access_log  /var/log/nginx/projectname.access.log  main;
+    error_log   /var/log/nginx/projectname.error.log info;
+    server_name localhost dev.projectname dev.drupal  {{ vagrant_host }};
+	client_max_body_size    50m;
+	root ${shared_folder.stdout};
+	#error_page 404 = @rewrite;
+    index index.php; 
+	location = /favicon.ico {
+                log_not_found off;
+                access_log off;
+        }
+        location = /robots.txt {
+        	alias /var/www/projectname/robot.txt;
+	}
+        # This matters if you use drush
+        location = /backup {
+                deny all;
+        }
+        # Very rarely should these ever be accessed outside of your lan
+        #location ~* \.(txt|log)$ {
+         #       allow 10.129.36.0/24;
+          #      deny all;
+        #}
+        location ~ \..*/.*\.php$ {
+               return 403;
+        }
+	#location = /install.php {
+	#	allow localhost;
+	#	deny   all;
+        #}
+
+        location / {
+                # This is cool because no php is touched for static content
+                try_files $uri $uri/ @drupal;
+        }
+        location @drupal {
+                # Some modules enforce no slash (/) at the end of the URL
+                # Else this rewrite block wouldn't be needed (GlobalRedirect)
+                rewrite ^/(.*)$ /index.php?q=$1;
+        }
+        location ~ \.php$ {
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+                include /etc/nginx/fastcgi_params;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME   $document_root$fastcgi_script_name; 
+                fastcgi_param  REQUEST_URI      $request_uri;
+                fastcgi_param  QUERY_STRING     $query_string;
+                fastcgi_param  REQUEST_METHOD   $request_method;
+                fastcgi_param  CONTENT_TYPE     $content_type;
+                fastcgi_param  CONTENT_LENGTH   $content_length;
+                fastcgi_pass localhost:9000;
+                #fastcgi_intercept_errors on;
+        }
+        # Fighting with ImageCache? This little gem is amazing.
+        location ~ ^/files/imagecache/ {
+                try_files $uri $uri/ @drupal;
+        }
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+                expires max;
+                log_not_found off;
+		try_files $uri $uri/ @drupal;
+        }
+}
