@@ -63,7 +63,7 @@ else
     git clone git://github.com/ansible/ansible.git ~/ansible 
     source ~/ansible/hacking/env-setup
     echo "Running ansible and vagrant playbook"
-    cd ~/ansible-vagrant/ && ansible-playbook --connection=local dev-install.yml
+    cd ~/ansible-vagrant-pullmode/ && ansible-playbook --connection=local dev-install.yml
     echo "Removing Ansible installation"
     rm -rf ../ansible-vagrant-pullmode
   else

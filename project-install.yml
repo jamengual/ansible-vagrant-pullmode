@@ -1,0 +1,53 @@
+---
+- hosts: localhost
+  gather_facts: False
+  #sudo: True
+  #sudo_user: jamengual
+  vars_files:
+    - ./project_vars.yml
+  tasks:
+     - name: Selecting code folder to share with VM
+       action: command python directoryselection.py
+       register: shared_folder
+
+     - name: Downloading Vagrant package
+       action: get_url url=$boxurl dest=/tmp/$vmbox 
+       
+     - name: Adding the box to vagrant
+       action: command vagrant box add $project_name /tmp/$vmbox
+
+     - name: Creating Vagrant directory $project_name
+       action: file state=directory path=$local_dir
+
+     - name: Creating shared folder if doesn't exist
+       action: file state=directory path=${shared_folder.stdout}
+
+     - name: Removing Vagrantfile if exist
+       action: file state=absent path=$local_dir/Vagrantfile
+
+     - name: Initializing Vagrant directory $project_name
+       action: command chdir=$local_dir vagrant init
+
+     - name: Exporting git ansible-vagrant-pullmode git repo
+       action: git repo=$git_url dest=$local_dir/ansible-vagrant-pullmode version=$checkout
+
+     - name: Configuring template for Vagrant file
+       action: template src=$local_dir/ansible-vagrant-pullmode/templates/Vagrantfile.j2 dest=$local_dir/Vagrantfile
+     
+     - name: Creating nginx virtual host config for VM
+       action: template src=$local_dir/ansible-vagrant-pullmode/templates/projectname.j2 dest=$local_dir/ansible-vagrant-pullmode/projectname_vhost
+
+     - name: Starting Vagrant Vm
+       action: command chdir=$local_dir vagrant up
+
+     - name: Creating ansible checkout directory on VM
+       action: command chdir=$local_dir vagrant ssh -c "sudo mkdir -p /var/lib/ansible/local"
+
+     - name: Changing permisions to checkout directory
+       action: command chdir=$local_dir vagrant ssh -c "sudo chown -R vagrant /var/lib/ansible"
+
+     - name: Running ansible pull from first time
+       action: command chdir=$local_dir vagrant ssh -c "ansible-playbook --connection=local /ansible/ansible-vagrant-pullmode/ansible-pull.yml"
+
+     - name: Waiting for services to start
+       action: wait_for host=localhost timeout=3600 port=3366 delay=10 state=started

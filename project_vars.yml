@@ -1,0 +1,27 @@
+---
+# Repo url for the ansible-pull script inside of the VM
+repo_url: git://github.com/jamengual/ansible-vagrant-pullmode.git
+
+# Branch name for the ansible-pull mode script
+#checkout: master
+checkout: dev
+
+# Project name, this is going to define the folder were the Vagrantfile will be stored
+# This folder will we created in your home dir
+# From this folder you will start your vagrant instance
+#project_name:  Projectname
+project_name:  PRUEBA
+
+# Name of the file that contain the vagrant box
+#vmbox: projectnameDevVagrant.pkg
+vmbox: PRUEBA.pkg
+
+# URL of the vagrant box package file
+#boxurl: http://yourserverurl/projectnameDevVagrant.pkg
+boxurl: http://server.amengual.cl/PRUEBA.pkg
+
+# Git url for the ansible-vagrant-pullmode
+git_url: git://github.com/jamengual/ansible-vagrant-pullmode.git
+
+# Local dir of the project
+local_dir: ~/PRUEBA
