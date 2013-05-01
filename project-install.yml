@@ -15,6 +15,7 @@
        
      - name: Adding the box to vagrant
        action: command vagrant box add $project_name /tmp/$vmbox
+       ignore_errors: yes
 
      - name: Creating Vagrant directory $project_name
        action: file state=directory path=$local_dir
@@ -28,8 +29,11 @@
      - name: Initializing Vagrant directory $project_name
        action: command chdir=$local_dir vagrant init
 
+     - name: Creating checkout directory for ansible pull
+       action: file state=directory path=$local_dir/ansible-vagrant-pullmode
+
      - name: Exporting git ansible-vagrant-pullmode git repo
-       action: git repo=$git_url dest=$local_dir/ansible-vagrant-pullmode version=$checkout
+       action: git repo=$git_url dest=/Users/jamengual/PRUEBA/ansible-vagrant-pullmode version=$checkout
 
      - name: Configuring template for Vagrant file
        action: template src=$local_dir/ansible-vagrant-pullmode/templates/Vagrantfile.j2 dest=$local_dir/Vagrantfile

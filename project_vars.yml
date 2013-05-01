@@ -3,8 +3,7 @@
 repo_url: git://github.com/jamengual/ansible-vagrant-pullmode.git
 
 # Branch name for the ansible-pull mode script
-#checkout: master
-checkout: dev
+checkout: master
 
 # Project name, this is going to define the folder were the Vagrantfile will be stored
 # This folder will we created in your home dir
