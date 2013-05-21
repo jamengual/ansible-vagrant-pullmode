@@ -1,17 +1,17 @@
 ansible-vagrant pull mode integration
 ======================================
 
-Ansible playbooks for vagrant in pull mode
+Ansible playbooks for vagrant in pull mode.
 
 This project was created to help Meedan in the developing process of one of their drupal projects. Although this is a more drupal oriented type of configuration it can be applied to many different frameworks and projects and I will be happy to receive feedback and feature request to make this project even better.
 
-This script/playbook for ansible allow developers to configure their own dev environment on they local machines using Vagrant and Ansible to match the configurations of the production environment or similar.
+This playbooks for ansible allow developers to configure their own dev environment on their local machines using Vagrant and Ansible to match the configurations of the production environment or similar.
 
-One of the thing that we needed was to be able to use pull mode in ansible from the virtual environments so that we can create per developer/project git repos for the dev VMs so that we can push changes to the repos and when the team/user comes online it will automatically pull the new playbook and run the ansible-cron to go through the changes at any time in any timezone without user/syadmin intervention.
+One of the things that we needed was to be able to use pull mode in ansible from the virtual environments so that we can create per developer/project git repos for the dev VMs so that we can push changes to the repos and when the team/user comes online it will automatically pull the new playbook and run the ansible-cron to go through the changes at any time in any timezone without user/syadmin intervention.
 
-This project was especially designed for groups working in different time zones, working from home and in different time zones.
+This project was especially designed for groups working in different time zones, working from home on flexible schedules.
 
-Please note that this script was build using bash so if you are a windows user you will not be able to use this script and you will have to get a copy of the dev environment from someone else and install it on your windows copy of virtual box.
+Please note that the install  script was build using bash so if you are a windows user you will not be able to use this script and you will have to get a copy of the dev environment from someone else and install it on your windows copy of virtual box.
 
 Before using this script make sure you have all the minimum requirements pre installed.
 
@@ -23,7 +23,7 @@ Requirements :
 
 3.- Python 2.x, pip or setuptools required.
 
-4.- A vagrant package linux system ready to use ( please refeer to http://docs-v1.vagrantup.com/v1/docs/getting-started/packaging.html) and hosted somewhere elsei(so that the install script can download it ).
+4.- A vagrant package linux system ready to use ( please refeer to http://docs-v1.vagrantup.com/v1/docs/getting-started/packaging.html) and hosted somewhere else (so that the install script can download it ).
 
 5.- Upload the vagrant_dev_install.sh script to a webserver 
 ```
