@@ -26,6 +26,8 @@ Requirements :
 4.- A vagrant package linux system ready to use ( please refeer to http://docs-v1.vagrantup.com/v1/docs/getting-started/packaging.html) and hosted somewhere else (so that the install script can download it ).
 
 5.- Upload the vagrant_dev_install.sh script to a webserver 
+
+6.- Define variables for the project in project_vars.yml and commit to your repo
 ```
 
 To run the script simply call from your terminal :
